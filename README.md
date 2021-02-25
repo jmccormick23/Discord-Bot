@@ -1,1 +1,1 @@
-# Discord-Bot
+# Discord-Bot for Ulala Clan Management
