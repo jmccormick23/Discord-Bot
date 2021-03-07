@@ -2,11 +2,8 @@ import os
 import discord
 import sqlite3
 
-TOKEN ='DISCORD TOKEN HERE'
-
 conn = sqlite3.connect('test.db')
 conn.isolation_level = None
-
 client = discord.Client()
 
 #CREATED DATABASE
@@ -79,4 +76,15 @@ async def on_message(message):
 
       await message.channel.send(embed=response)
 
-client.run(TOKEN)
+    if message.content.startswith('!delete'):
+      await message.channel.send("Are you sure you want to delete all of your character data?(yes/no)")
+      delete = await bot.wait_for('message',timeout = 60)
+      if delete.content.startswith('y' or 'Y'):
+        print('this got here')
+        cursor = conn.execute("DELETE from MEMBERS WHERE id=?", (message.author.id,))
+
+
+from dotenv import load_dotenv
+load_dotenv()
+
+client.run(os.getenv('TOKEN'))
